@@ -1,0 +1,14 @@
+services:
+  db_mysql:
+    container_name: db_mysql
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ltbanking
+      MYSQL_USER: userapp
+      MYSQL_PASSWORD: 1serBkg24
+      MYSQL_ROOT_PASSWORD: 4kDGQDYe4JxDjRd
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
