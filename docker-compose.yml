@@ -12,3 +12,10 @@ services:
     volumes:
       - ./init-scripts:/docker-entrypoint-initdb.d
 
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    ports:
+      - "9411:9411"
+
