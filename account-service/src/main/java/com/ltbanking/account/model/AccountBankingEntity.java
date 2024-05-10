@@ -2,6 +2,7 @@ package com.ltbanking.account.model;
 
 import jakarta.persistence.*;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,10 @@ public class AccountBankingEntity extends AutitableEntity {
   @JdbcTypeCode(Types.VARCHAR)
   private UUID id;
 
+  @JdbcTypeCode(Types.VARCHAR)
   private UUID idUserBanking;
-  private String uniqueAccountNumber;
+  private String accountNumber;
+  private Double balance;
+  private LocalDateTime creationDate;
+
 }

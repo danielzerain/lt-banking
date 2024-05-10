@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @OpenAPIDefinition(
@@ -14,6 +16,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
                 version = "1.0",
                 description = "Microservice Cards API v1.0"))
 @EnableFeignClients
+@EnableJpaRepositories
+@EnableJpaAuditing
 public class CardApplication {
 
     public static void main(String[] args) {

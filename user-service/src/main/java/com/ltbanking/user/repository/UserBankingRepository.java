@@ -12,4 +12,7 @@ public interface UserBankingRepository extends CrudRepository<UserBankingEntity,
 
   Optional<UserBankingEntity> findUserBankingEntitiesByIdTypeAndIdentificationNumber(
       String idType, String identificationNumber);
+
+  Optional<UserBankingEntity> findUserBankingEntitiesByIdentificationNumber(
+      String identificationNumber);
 }

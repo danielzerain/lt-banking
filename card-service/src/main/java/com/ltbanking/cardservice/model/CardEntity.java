@@ -21,12 +21,9 @@ public class CardEntity extends AutitableEntity{
     @GeneratedValue
     @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
+    @JdbcTypeCode(Types.VARCHAR)
     private UUID accountId;
     private String cardNumber;
-    private String cardType;
-    private String cardHolderName;
-    private String cardExpiryDate;
-    private String cardCVV;
     private String cardSecurityCode;
 
 }
