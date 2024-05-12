@@ -16,7 +16,10 @@ public class AccountController {
   private AccountService accountService;
 
   @PostMapping("/register")
-  @Operation(operationId="register",summary = "Registro de Cuentas",description = "Servicio para la creacion de la cuenta")
+  @Operation(
+      operationId = "register",
+      summary = "Registro de Cuentas",
+      description = "Servicio para la creacion de la cuenta")
   public ResponseEntity<AccountDto> register(@RequestBody UserDataPayload userPayload) {
     try {
       AccountDto accountDto = accountService.createAccount(userPayload);
@@ -27,8 +30,12 @@ public class AccountController {
   }
 
   @PutMapping("/change-pin")
-  @Operation(operationId="change-pin",summary = "Cambio de PIN",description = "Servicio para el cambio del codigo de securidad de la tarjeta-PIN ")
-  public ResponseEntity<CommonResponse> register(@RequestBody CardSecurityCodeChange cardSecurityCodeChange) {
+  @Operation(
+      operationId = "change-pin",
+      summary = "Cambio de PIN",
+      description = "Servicio para el cambio del codigo de securidad de la tarjeta-PIN ")
+  public ResponseEntity<CommonResponse> register(
+      @RequestBody CardSecurityCodeChange cardSecurityCodeChange) {
     try {
       CommonResponse response = accountService.changeCardSecurityCode(cardSecurityCodeChange);
       return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -38,7 +45,10 @@ public class AccountController {
   }
 
   @GetMapping("/account-statement/{id}")
-  @Operation(operationId="register",summary = "Reporte Estado Cuenta",description = "Emision del reporte de estado de cuentad el cliente")
+  @Operation(
+      operationId = "account-statement",
+      summary = "Reporte Estado Cuenta",
+      description = "Emision del reporte de estado de cuentad el cliente")
   public ResponseEntity<DocumentResponse> accountStatement(
       @PathVariable("id") String accountNumber) {
     try {

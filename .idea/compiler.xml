@@ -10,6 +10,8 @@
         </processorPath>
         <module name="lt-banking.card-service.main" />
         <module name="lt-banking.user-service.test" />
+        <module name="lt-banking.account-service.main" />
+        <module name="lt-banking.account-service.test" />
         <module name="lt-banking.card-service.test" />
         <module name="lt-banking.user-service.main" />
       </profile>

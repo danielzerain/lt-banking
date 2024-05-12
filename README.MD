@@ -7,7 +7,9 @@ Para poner en funcionamiento debera ingresar a cada proyecto y correr el siguien
 
 <p align="center"> .\gradlew clean build</p>
 
-una vez compilados todos los servicios, nos situamos en la raiz del proyecto y ejecutamos el siguiente comando
+O pueden ejecutar el mismo comando en la raiz del proyecto para la compilacion
+
+Una vez compilados todos los servicios, nos situamos en la raiz del proyecto y ejecutamos el siguiente comando
 
 <p align="center">  docker compose up -d --build </p>
 

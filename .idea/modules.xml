@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/account-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/account-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/card-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/card-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/account-service/lt-banking.account-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/account-service/lt-banking.account-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/card-service/lt-banking.card-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/card-service/lt-banking.card-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/lt-banking.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/lt-banking.user-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />

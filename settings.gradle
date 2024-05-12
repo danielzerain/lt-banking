@@ -1,2 +1,2 @@
 rootProject.name = 'lt-banking'
-include 'account-services','card-service','config-service','discovery-service','gateway-service','user-service'
+include 'user-service','account-service','card-service','config-service','discovery-service','gateway-service'
