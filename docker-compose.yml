@@ -1,6 +1,6 @@
 services:
-  db_mysql:
-    container_name: db_mysql
+  db-mysql:
+    container_name: db-mysql
     image: mysql:latest
     ports:
       - "3306:3306"
@@ -12,8 +12,6 @@ services:
     volumes:
       - mysql-volume:/var/lib/mysql
       - ./init-scripts:/docker-entrypoint-initdb.d
-    networks:
-      - banking-nt
 
   prometheus:
     image: prom/prometheus:v2.44.0
@@ -22,23 +20,107 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - banking-nt
 
   grafana:
     image: grafana/grafana:9.5.2
     container_name: grafana
     ports:
       - "3000:3000"
-    restart: unless-stopped
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-    networks:
-      - banking-nt
 
-networks:
-  banking-nt:
-    driver: bridge
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    ports:
+      - "9411:9411"
+
+  config-service:
+    build:
+      context: config-service
+      dockerfile: Dockerfile
+    container_name: config-service
+    ports:
+      - "8002:8002"
+    healthcheck:
+      test: curl --fail http://localhost:8002/user-service/default  || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+
+  discovery-service:
+    build:
+      context: discovery-service
+      dockerfile: Dockerfile
+    container_name: discovery-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: curl --fail http://localhost:8001/eureka/v2/apps || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  user-service:
+    build:
+      context: user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - "8005:8005"
+
+  account-service:
+    build:
+      context: account-service
+      dockerfile: Dockerfile
+    container_name: account-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - "8006:8006"
+
+  card-service:
+    build:
+      context: card-service
+      dockerfile: Dockerfile
+    container_name: card-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - "8007:8007"
+
+
+  gateway-service:
+    build:
+      context: gateway-service
+      dockerfile: Dockerfile
+    container_name: gateway-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
 
 volumes:
   mysql-volume:

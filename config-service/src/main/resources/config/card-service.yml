@@ -15,3 +15,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health, info, threaddump, mappings, prometheus
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+      show-components: always
+      enabled: true

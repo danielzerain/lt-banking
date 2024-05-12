@@ -6,17 +6,22 @@ import com.ltbanking.user.model.UserBankingEntity;
 import com.ltbanking.user.repository.UserBankingRepository;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
   private UserBankingRepository userBankingRepository;
   private AccountClient accountClient;
 
   @Override
   public UserAccountDto createUserAccount(UserPayload userPayload) throws Exception {
+    LOGGER.info(String.format("userApi,payload=%s", userPayload));
+
     Optional<UserBankingEntity> userBankingVerify =
         userBankingRepository.findUserBankingEntitiesByIdTypeAndIdentificationNumber(
             userPayload.idType(), userPayload.identificationNumber());
@@ -78,6 +83,6 @@ public class UserServiceImpl implements UserService {
     }
     userBankingVerify.get().setPassword(passwordChangeDto.newPassword());
     userBankingRepository.save(userBankingVerify.get());
-    return  new CommonResponse(1, "User name updated successfully");
+    return  new CommonResponse(1, "User password updated successfully");
   }
 }

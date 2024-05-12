@@ -1,0 +1,66 @@
+server:
+  port: 8000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8001/eureka/
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/user/**
+        filters:
+          - RewritePath=/user/(?<path>.*), /$\{path}
+      - id: account-service
+        uri: lb://account-service
+        predicates:
+          - Path=/account/**
+        filters:
+          - RewritePath=/account/(?<path>.*), /$\{path}
+      - id: card-service
+        uri: lb://card-service
+        predicates:
+          - Path=/card/**
+        filters:
+          - RewritePath=/card/(?<path>.*), /$\{path}
+      actuator:
+        verbose:
+          enable: true
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+      show-components: always
+      enabled: true
+    gateway:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans

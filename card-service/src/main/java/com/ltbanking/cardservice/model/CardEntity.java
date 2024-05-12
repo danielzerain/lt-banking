@@ -24,6 +24,6 @@ public class CardEntity extends AutitableEntity{
     @JdbcTypeCode(Types.VARCHAR)
     private UUID accountId;
     private String cardNumber;
-    private String cardSecurityCode;
+    private Integer cardSecurityCode;
 
 }

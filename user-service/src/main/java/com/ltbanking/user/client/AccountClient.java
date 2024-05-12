@@ -5,7 +5,7 @@ import com.ltbanking.user.domain.UserDataPayload;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "account-service", url = "http://localhost:8006/account")
+@FeignClient(name = "account-service")
 public interface AccountClient {
 
   @PostMapping(value = "/register")

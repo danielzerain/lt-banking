@@ -6,5 +6,5 @@ import lombok.Data;
 public class AccountDto {
     private String accountNumber;
     private String cardNumber;
-    private String cardSecurityCode;
+    private Integer cardSecurityCode;
 }

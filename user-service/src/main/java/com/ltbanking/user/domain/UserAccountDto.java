@@ -9,5 +9,5 @@ public class UserAccountDto {
     UUID id;
     String accountNumber;
     String cardNumber;
-    String cardSecurityCode;
+    Integer cardSecurityCode;
 }
