@@ -48,15 +48,15 @@ public class CarServiceImpl implements CardService {
   @Override
   public CardDto getCardByCardNumber(String cardNumber) {
     Optional<CardEntity> cardEntity = cardRepository.findByCardNumber(cardNumber);
-    if (!cardEntity.isPresent()) {
-      return null;
-    } else {
-      return new CardDto(cardEntity.get().getCardNumber(), cardEntity.get().getCardSecurityCode());
-    }
+      return cardEntity.map(entity -> new CardDto(entity.getCardNumber(), entity.getCardSecurityCode())).orElse(null);
   }
 
   @Override
   public CardDto getCardByAccountID(UUID idAccount) {
-    return null;
+    LOGGER.info(String.format("getCardByAccountID,payload=%s", idAccount));
+    Optional<CardEntity> cardEntity = cardRepository.findByAccountId(UUID.fromString(idAccount.toString()));
+    return cardEntity
+        .map(entity -> new CardDto(entity.getCardNumber(), entity.getCardSecurityCode()))
+        .orElse(null);
   }
 }

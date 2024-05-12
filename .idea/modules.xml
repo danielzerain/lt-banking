@@ -2,25 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/account-service.iml" filepath="$PROJECT_DIR$/account-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/account-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/account-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/account-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/account-service.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/card-service.iml" filepath="$PROJECT_DIR$/card-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/card-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/card-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/card-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/card-service.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/config-service.iml" filepath="$PROJECT_DIR$/config-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/config-service.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/discovery-service.iml" filepath="$PROJECT_DIR$/discovery-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-service.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gateway-service.iml" filepath="$PROJECT_DIR$/gateway-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway-service.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lt-banking.iml" filepath="$PROJECT_DIR$/lt-banking.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-service.iml" filepath="$PROJECT_DIR$/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/card-service/lt-banking.card-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/card-service/lt-banking.card-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/lt-banking.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/lt-banking.user-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.test.iml" />
     </modules>
   </component>
 </project>

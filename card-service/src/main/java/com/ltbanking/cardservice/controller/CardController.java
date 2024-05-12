@@ -26,8 +26,8 @@ public class CardController {
     }
   }
 
-  @GetMapping("/info/{id}")
-  public ResponseEntity<CardDto> cardInfoByCardNumber(@PathVariable("id") String cardNumber) {
+  @GetMapping("/info/{cardNumber}")
+  public ResponseEntity<CardDto> cardInfoByCardNumber(@PathVariable String cardNumber) {
     try {
       CardDto accountDto = cardService.getCardByCardNumber(cardNumber);
       return ResponseEntity.status(HttpStatus.OK).body(accountDto);
@@ -37,9 +37,9 @@ public class CardController {
   }
 
   @GetMapping("/card-info/{id}")
-  public ResponseEntity<CardDto> cardInfoByIdAccount(@PathVariable("id") UUID idAccount) {
+  public ResponseEntity<CardDto> cardInfoByIdAccount(@PathVariable UUID id) {
     try {
-      CardDto accountDto = cardService.getCardByAccountID(idAccount);
+      CardDto accountDto = cardService.getCardByAccountID(id);
       return ResponseEntity.status(HttpStatus.OK).body(accountDto);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

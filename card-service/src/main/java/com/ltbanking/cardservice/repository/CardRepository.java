@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface CardRepository extends CrudRepository<CardEntity, UUID> {
     Optional<CardEntity> findByCardNumber(String cardNumber);
 
+    Optional<CardEntity> findByAccountId(UUID idAccount);
+
 }

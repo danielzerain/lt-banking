@@ -10,6 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -23,11 +28,14 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public AccountDto createAccount(UserDataPayload userDataPayload) {
     LOGGER.info(String.format("accountApi,payload=%s", userDataPayload));
+    LocalDateTime actualDate = LocalDate.now().atStartOfDay();
     AccountDto accountDto = new AccountDto();
     AccountBankingEntity accountBankingEntity = new AccountBankingEntity();
     String accountNumber = Utils.generateCode(10);
     accountBankingEntity.setAccountNumber(accountNumber);
     accountBankingEntity.setIdUserBanking(userDataPayload.idUser());
+    accountBankingEntity.setBalance(100.0);
+    accountBankingEntity.setCreationDate(actualDate);
     accountBankingRepository.save(accountBankingEntity);
     accountDto.setAccountNumber(accountNumber);
     AccountPayload accountPayload = new AccountPayload(accountBankingEntity.getId());
@@ -67,15 +75,23 @@ public class AccountServiceImpl implements AccountService {
     if (accountBankingEntity.isPresent()) {
       CardDto cardDto = cardClient.getCardInfoIdAccount(accountBankingEntity.get().getId());
       if (cardDto == null) {
-        return null;
+        LOGGER.error(
+            String.format("Card number not found,payload=%s", accountBankingEntity.get().getId()));
+        return new DocumentResponse(99, "Card number not found", null);
       }
-      String document =
-          Utils.generateAccountExtract(
-              accountNumber,
-              accountBankingEntity.get().getBalance().toString(),
-              cardDto.cardNumber(),
-              accountBankingEntity.get().getCreationDate().toString());
-      return new DocumentResponse(0, "Reporte Generado Correctamente", document);
+      DateTimeFormatter CUSTOM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String document =
+                null;
+        try {
+            document = Utils.generateAccountExtract(
+                accountNumber,
+                accountBankingEntity.get().getBalance().toString(),
+                cardDto.cardNumber(),
+                accountBankingEntity.get().getCreationDate().format(CUSTOM_FORMATTER));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new DocumentResponse(0, "Reporte Generado Correctamente", document);
     } else {
       return new DocumentResponse(99, "Account number not found", null);
     }
