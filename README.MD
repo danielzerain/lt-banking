@@ -44,3 +44,6 @@ http://localhost:8006/swagger-ui/index.html
 Tarjetas:
 http://localhost:8007/swagger-ui/index.html
 </p>
+
+<h2>Documentacion</h2>
+<p>La documentacion se encuentra en la carpeta documentacion de este mismo repositorio </p>
