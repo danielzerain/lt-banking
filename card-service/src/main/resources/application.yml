@@ -11,3 +11,22 @@ spring:
     name: card-service
   config:
     import: "optional:configserver:http://localhost:8002"
+---
+server:
+  port: 8007
+spring:
+  application:
+    name: card-service
+  activate:
+    on-profile: test
+  cloud:
+    discovery:
+      enabled: false
+  config:
+    enabled: false
+  sql:
+    init:
+      mode: always
+eureka:
+  client:
+    enabled: false

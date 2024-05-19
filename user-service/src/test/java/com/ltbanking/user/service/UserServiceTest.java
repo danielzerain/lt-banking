@@ -1,22 +1,29 @@
 package com.ltbanking.user.service;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.BDDAssumptions.given;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
-import com.ltbanking.user.model.UserBankingEntity;
+import com.ltbanking.user.client.AccountClient;
+import com.ltbanking.user.domain.AccountDto;
+import com.ltbanking.user.domain.UserAccountDto;
+import com.ltbanking.user.domain.UserDataPayload;
+import com.ltbanking.user.domain.UserPayload;
+import java.util.UUID;
+
 import com.ltbanking.user.repository.UserBankingRepository;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -25,13 +32,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles(value = "test")
+@SpringBootTest
 public class UserServiceTest {
 
-  @LocalServerPort private Integer port;
+  @MockBean private AccountClient accountClient;
 
-  @Autowired private UserBankingRepository userBankingRepository;
+  @Autowired private UserService userService;
 
   static MySQLContainer<?> mysql =
       new MySQLContainer<>("mysql:latest")
@@ -56,35 +63,14 @@ public class UserServiceTest {
     registry.add("spring.datasource.password", mysql::getPassword);
   }
 
-
   @Test
-  public void testFindById() {
-    RestAssured.baseURI = "http://localhost:8005";
-    // Inserta datos de prueba
-    UserBankingEntity entity = new UserBankingEntity();
-    UserBankingEntity entityPersist = new UserBankingEntity();
-    entity.setUserName("user.test");
-    entity.setPassword("pwd123");
-    entity.setCompleteName("Usuario de Prueba");
-    entity.setIdType("CI");
-    entity.setIdentificationNumber("1231321234");
-    entityPersist = userBankingRepository.save(entity);
-    // Prueba la consulta
-    Optional<UserBankingEntity> result = userBankingRepository.findById(entityPersist.getId());
-    assertTrue(result.isPresent());
-
-    String bodyPayload =
-        "{\n"
-            + "    \"identificationNumber\": \"1231321234\",\n"
-            + "    \"oldPassword\": \"pwd123\",\n"
-            + "    \"newPassword\": \"Abc.12345\"\n"
-            + "}";
-    given()
-        .contentType(ContentType.JSON)
-        .body(bodyPayload)
-        .when()
-        .put("http://localhost:8005/user/update-password")
-        .then()
-        .statusCode(200);
+  public void when_userRegister_returnAccountData() throws Exception {
+    UserDataPayload userDataPayload = new UserDataPayload(UUID.randomUUID());
+    AccountDto accountDto = new AccountDto("12312312312", "1234545465654566", 1234);
+    when(accountClient.register(userDataPayload)).thenReturn(accountDto);
+    UserPayload userPayload =
+        new UserPayload("User Complet Name", "CI", "4376706", "user.test", "1234");
+    UserAccountDto userAccountDto = userService.createUserAccount(userPayload);
+    assertNotNull(userAccountDto.getId());
   }
 }

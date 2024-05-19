@@ -1,10 +1,14 @@
 package com.ltbanking.user.domain;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class AccountDto {
-    private String accountNumber;
-    private String cardNumber;
-    private Integer cardSecurityCode;
+  private String accountNumber;
+  private String cardNumber;
+  private Integer cardSecurityCode;
 }
